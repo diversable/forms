@@ -17,10 +17,17 @@
 
 <section class="mx-auto">
 	<h1 class="text-3xl underline">Today</h1>
-	<form method="POST">
-		<input type="text" name="taskName" />
-		<button type="submit">Submit</button>
-	</form>
+	<div class="flex-col">
+		<form method="POST">
+			<label for="taskName" class="p-4 mx-auto">New Task</label>
+			<input type="text" name="taskName" class="input" />
+
+			<button
+				type="submit"
+				class="bg-blue-400 text-white px-4 py-2 border-4 border-slate-700 rounded-xl">Submit</button
+			>
+		</form>
+	</div>
 
 	<br /><br /><br />
 	<!-- SHOW TASKS -->
@@ -64,5 +71,8 @@
 <style lang="postcss">
 	.sub-heading {
 		@apply text-2xl underline underline-offset-4 text-slate-700;
+	}
+	.input {
+		@apply border-4 rounded-xl border-spacing-4 border-blue-200;
 	}
 </style>
