@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { identity } from 'svelte/internal';
+	// Loading Data
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -7,6 +7,7 @@
 	console.log(data);
 
 	const { tasks } = data;
+	// END Loading Data
 </script>
 
 <svelte:head>
@@ -23,7 +24,7 @@
 
 	<br /><br /><br />
 	<h2 class="text-xl">Tasks</h2>
-	{#each tasks as { id, taskName, onDays, underHeading, started, finished }}
+	{#each tasks as { id, taskName, onDays, underHeading, started, finished } (id)}
 		ID: {id}
 		<br />
 		Task Name: {taskName}
