@@ -7,15 +7,35 @@ import type { PageServerLoad } from "./$types";
 
 // Task = thing you can do in 1 sitting
 const activities = [
+  {
+    id: crypto.randomUUID(),
+    activityName: "read email",
+    onDays: ["Monday", "Wednesday", "Friday"],
+    underHeading: "Morning",
+    completed: false,
+  },
+  {
+    id: crypto.randomUUID(),
+    activityName: "brush teeth",
+    onDays: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+    underHeading: "bedtime routine",
+    completed: false,
+  },
+];
+
+const projects = [
   // {
   //   id: crypto.randomUUID(),
-  //   activityName: "read email",
-  //   onDays: ["Monday", "Wednesday", "Friday"],
-  //   underHeading: "Morning",
-  //   completed: false,
-  // }, {
-  //   id: crypto.randomUUID(),
-  //   activityName: "brush teeth",
+  //   projectName: "Work through Rust Web book",
+  //   projectTasks: ["read chapter 3", "do chapter 3 exercises"],
   //   onDays: [
   //     "Monday",
   //     "Tuesday",
@@ -23,51 +43,41 @@ const activities = [
   //     "Thursday",
   //     "Friday",
   //     "Saturday",
-  //     "Sunday",
   //   ],
-  //   underHeading: "bedtime routine",
+  //   underHeading: "afternoon productivity block",
+  //   started: true,
+  //   completed: false,
+  // },
+  // {
+  //   id: crypto.randomUUID(),
+  //   projectName: "prep grad school applications",
+  //   projectTasks: [
+  //     "read disability theory book",
+  //     "prep UBC grad application",
+  //     "prep UVic grad application",
+  //   ],
+  //   onDays: [
+  //     "Monday",
+  //     "Tuesday",
+  //     "Wednesday",
+  //     "Thursday",
+  //     "Friday",
+  //     "Saturday",
+  //   ],
+  //   underHeading: "morning productivity block",
+  //   started: false,
   //   completed: false,
   // }
 ];
 
-// const projects = [{
-//   id: crypto.randomUUID(),
-//   projectName: "read & do exercises in Rust Web book",
-//   onDays: [
-//     "Monday",
-//     "Tuesday",
-//     "Wednesday",
-//     "Thursday",
-//     "Friday",
-//     "Saturday",
-//   ],
-//   underHeading: "afternoon productivity block",
-//   started: true,
-//   completed: false,
-// }, {
-//   id: crypto.randomUUID(),
-//   projectName: "prep grad school applications",
-//   onDays: [
-//     "Monday",
-//     "Tuesday",
-//     "Wednesday",
-//     "Thursday",
-//     "Friday",
-//     "Saturday",
-//   ],
-//   underHeading: "morning productivity block",
-//   started: false,
-//   completed: false,
-// }];
-
 export const load: PageServerLoad = ({ data }) => {
   // console.log(data);
-  return { activities };
-  // return { activities, projects };
+
+  return { activities, projects };
 };
 
 export const actions: Actions = {
-  default: async ({ request }) => {
+  createActivity: async ({ request }) => {
     const formData = await request.formData();
     // console.log(formData);
 
@@ -81,7 +91,7 @@ export const actions: Actions = {
       id: crypto.randomUUID(),
       activityName: activityName,
       onDays: onDays,
-      underHeading: underHeading,
+      underHeading: underHeading || "none",
       completed: completed || false,
     };
 
@@ -90,9 +100,33 @@ export const actions: Actions = {
 
     // console.log(activities);
     return { success: true };
-    // return {
-    //   success: true,
-    //   activities,
-    // };
+  },
+  createProject: async ({ request }) => {
+    const formData = await request.formData();
+    // console.log(formData);
+
+    // grab the name atributes off the various form inputs
+    const projectName = formData.get("projectName");
+    const projectTasks = formData.getAll("projectTasks");
+    const onDays = formData.getAll("onDays");
+    const underHeading = formData.get("underHeading");
+    const started = formData.get("started");
+
+    console.log(projectName, projectTasks, onDays, underHeading, started);
+    const newProject = {
+      id: crypto.randomUUID(),
+      projectName: projectName,
+      projectTasks: projectTasks,
+      onDays: onDays,
+      underHeading: underHeading || "none",
+      started: started || false,
+      completed: false,
+    };
+
+    // console.log(newActivity);
+    projects.push(newProject);
+
+    // console.log(activities);
+    return { success: true };
   },
 };
