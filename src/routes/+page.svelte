@@ -5,6 +5,8 @@
 	export let data: PageData;
 
 	console.log(data);
+
+	const { tasks } = data;
 </script>
 
 <svelte:head>
@@ -21,7 +23,7 @@
 
 	<br /><br /><br />
 	<h2 class="text-xl">Tasks</h2>
-	<!-- {#each data as { id, taskName, onDays, underHeading, started, finished }}
+	{#each tasks as { id, taskName, onDays, underHeading, started, finished }}
 		ID: {id}
 		<br />
 		Task Name: {taskName}
@@ -33,5 +35,6 @@
 		Started: {started}
 		<br />
 		Finished: {finished}
-	{/each} -->
+		<br /><br /><br />
+	{/each}
 </section>

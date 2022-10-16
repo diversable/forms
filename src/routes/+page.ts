@@ -31,7 +31,7 @@ const tasks = [{
 
 export const load: PageLoad = ({ data }) => {
   console.log(data);
-  return tasks;
+  return { tasks: tasks };
 };
 
 export const actions: Actions = {
