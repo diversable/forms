@@ -74,7 +74,7 @@
 			<br /><br />
 			<label for="completed"
 				>Have you completed the activity already?
-				<input type="checkbox" name="completed" value={false} />
+				<input type="checkbox" name="completed" value={true} />
 			</label>
 
 			<br /><br /><br />
@@ -106,7 +106,7 @@
 	{/each}
 
 	<!-- SHOW PROJECTS -->
-	<h2 class="sub-heading">Projects</h2>
+	<!-- <h2 class="sub-heading">Projects</h2>
 	{#each projects as { id, projectName, onDays, underHeading, started, completed } (id)}
 		<p>
 			ID: {id}
@@ -122,7 +122,7 @@
 			Completed: {completed}
 			<br /><br /><br />
 		</p>
-	{/each}
+	{/each} -->
 </section>
 
 <style lang="postcss">
