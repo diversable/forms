@@ -6,16 +6,15 @@ import type { PageLoad } from "./$types";
 export const prerender = true;
 
 // Task = thing you can do in 1 sitting
-const tasks = [{
+const activities = [{
   id: crypto.randomUUID(),
-  taskName: "read email",
+  activityName: "read email",
   onDays: ["Monday", "Wednesday", "Friday"],
   underHeading: "Morning",
-
-  finished: false,
+  completed: false,
 }, {
   id: crypto.randomUUID(),
-  taskName: "brush teeth",
+  activityName: "brush teeth",
   onDays: [
     "Monday",
     "Tuesday",
@@ -25,14 +24,13 @@ const tasks = [{
     "Saturday",
     "Sunday",
   ],
-  underHeading: "Bedtime Routine",
-
-  finished: false,
+  underHeading: "bedtime routine",
+  completed: false,
 }];
 
 const projects = [{
   id: crypto.randomUUID(),
-  taskName: "read & do exercises in Rust Web book",
+  projectName: "read & do exercises in Rust Web book",
   onDays: [
     "Monday",
     "Tuesday",
@@ -41,12 +39,12 @@ const projects = [{
     "Friday",
     "Saturday",
   ],
-  underHeading: "Afternoon Productivity Block",
+  underHeading: "afternoon productivity block",
   started: true,
-  finished: false,
+  completed: false,
 }, {
   id: crypto.randomUUID(),
-  taskName: "prep grad school applications",
+  projectName: "prep grad school applications",
   onDays: [
     "Monday",
     "Tuesday",
@@ -55,14 +53,14 @@ const projects = [{
     "Friday",
     "Saturday",
   ],
-  underHeading: "Morning Productivity Block",
+  underHeading: "morning productivity block",
   started: false,
-  finished: false,
+  completed: false,
 }];
 
 export const load: PageLoad = ({ data }) => {
   console.log(data);
-  return { tasks: tasks, projects: projects };
+  return { activities: activities, projects: projects };
 };
 
 export const actions: Actions = {
