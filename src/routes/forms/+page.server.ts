@@ -1,10 +1,10 @@
 import type { Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
+import { invalid } from "@sveltejs/kit";
 
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in production
 // export const prerender = true;
-export const ssr = true;
 
 // Task = thing you can do in 1 sitting
 const activities = [
@@ -105,16 +105,27 @@ export const actions: Actions = {
   },
   createProject: async ({ request }) => {
     const formData = await request.formData();
-    // console.log(formData);
+    console.log(formData);
 
     // grab the name atributes off the various form inputs
     const projectName = formData.get("projectName");
-
+    // use .getAll to grab an array of form values (form values all must use the same name)
     const projectActivities = formData.getAll("projectActivities");
-
     const onDays = formData.getAll("onDays");
     const underHeading = formData.get("underHeading");
     const started = formData.get("started");
+
+    if (projectName.length < 2) {
+      return invalid(400, {
+        error: true,
+        message: "Project name must be at least 2 characters long.",
+        projectName,
+        projectActivities,
+        onDays,
+        underHeading,
+        started,
+      });
+    }
 
     // create Project ID
     const projectId = crypto.randomUUID();
@@ -126,6 +137,8 @@ export const actions: Actions = {
 
     if (projectActivities.length > 0) {
       for (const projectActivity of projectActivities) {
+        if (projectActivity.length == 0) break;
+
         const newProjectActivity = {
           id: crypto.randomUUID(),
           activityName: projectActivity,
@@ -136,7 +149,6 @@ export const actions: Actions = {
         };
         allProjectActivities.push(newProjectActivity);
         activityIds.push(newProjectActivity.id);
-        // console.log(projectActivity);
       }
     }
 

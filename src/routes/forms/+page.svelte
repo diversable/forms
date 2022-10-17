@@ -1,11 +1,11 @@
 <script lang="ts">
 	// Loading Data
 	import type { ActionData, PageData } from './$types';
-	import { enhance } from '$app/forms';
+	import { applyAction, enhance } from '$app/forms';
 
 	export let data: PageData;
 
-	console.log(data);
+	// console.log(data);
 
 	const { activities, projects, allProjectActivities } = data;
 	// END Loading Data
@@ -23,7 +23,7 @@
 <section class="mx-auto">
 	<h1 class="text-3xl underline">Today</h1>
 	<div class="flex-col border">
-		<form method="POST" action="?/createActivity" use:enhance>
+		<form method="POST" action="?/createActivity">
 			<br />
 			<label for="activityName" class="p-4 mx-auto">New Activity</label>
 			<input
@@ -118,7 +118,31 @@
 
 	<h2 class="text-3xl underline">Projects</h2>
 	<div class="flex-col border">
-		<form method="POST" action="?/createProject" use:enhance>
+		<form
+			method="POST"
+			action="?/createProject"
+			use:enhance={({ form, data, action }) => {
+				// This runs before submission to server
+				console.log('form: ', form);
+				console.log('data: ', data);
+				console.log('action: ', action);
+
+				return async ({ result, update }) => {
+					// this part runs after submission to server
+					console.log('result: ', result);
+
+					if (result.type === 'success') {
+						form.reset();
+						update();
+					}
+					if (result.type === 'invalid') {
+						await applyAction(result);
+					}
+
+					update();
+				};
+			}}
+		>
 			<br />
 			<label for="projectName" class="p-4 mx-auto">New Project</label>
 			<input
