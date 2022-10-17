@@ -207,8 +207,9 @@
 			Project Name: {projectName}
 
 			<br /><br />
+			Project ActivityIds:
 			{#each projectActivityIds as projectActivityId}
-				Project ActivityIds: {projectActivityId}
+				{projectActivityId},
 			{/each}
 
 			<br /><br />
