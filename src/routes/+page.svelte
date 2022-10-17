@@ -1,6 +1,6 @@
 <script lang="ts">
 	// Loading Data
-	import type { PageData } from './$types';
+	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
 
@@ -10,7 +10,7 @@
 	// END Loading Data
 
 	// Form
-	export let form;
+	export let form: ActionData;
 	console.log(form);
 </script>
 
