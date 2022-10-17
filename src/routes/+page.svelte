@@ -6,7 +6,7 @@
 
 	console.log(data);
 
-	const { activities, projects } = data;
+	const { activities, projects, allProjectActivities } = data;
 	// END Loading Data
 
 	// Form
@@ -128,13 +128,13 @@
 				class="input"
 			/>
 			<br /><br />
-			<label for="projectTasks" class="p-4 mx-auto">Project Tasks</label>
+			<label for="projectActivities" class="p-4 mx-auto">Project Tasks</label>
 			<br />
-			<input type="text" name="projectTasks" placeholder="project task #1" class="input" />
+			<input type="text" name="projectActivities" placeholder="project activity #1" class="input" />
 			<br />
-			<input type="text" name="projectTasks" placeholder="project task #2" class="input" />
+			<input type="text" name="projectActivities" placeholder="project activity #2" class="input" />
 			<br />
-			<input type="text" name="projectTasks" placeholder="project task #3" class="input" />
+			<input type="text" name="projectActivities" placeholder="project activity #3" class="input" />
 			<br /><br />
 			<p><i>Which day(s) would you like to work on your project?</i></p>
 			<label for="Monday"
@@ -200,13 +200,17 @@
 	</div>
 	<!-- SHOW PROJECTS -->
 	<h2 class="sub-heading">Projects List</h2>
-	{#each projects as { id, projectName, projectTasks, onDays, underHeading, started, completed } (id)}
+	{#each projects as { id, projectName, projectActivityIds, onDays, underHeading, started, completed } (id)}
 		<p>
 			ID: {id}
 			<br /><br />
 			Project Name: {projectName}
+
 			<br /><br />
-			Project Tasks: {projectTasks}
+			{#each projectActivityIds as projectActivityId}
+				Project ActivityIds: {projectActivityId}
+			{/each}
+
 			<br /><br />
 			On Days: {onDays},
 			<br /><br />
@@ -217,6 +221,24 @@
 			Completed: {completed}
 			<br /><br /><br />
 		</p>
+	{/each}
+
+	<br /><br /><br />
+
+	<h1 class="text-2xl">All Project's Activities</h1>
+	{#each allProjectActivities as { id, activityName, associatedWithProject, onDays, underHeading, completed }}
+		Id: {id}
+		<br />
+		activityName: {activityName}
+		<br />
+		associated with project (project's id): {associatedWithProject}
+		<br />
+		on days: {onDays}
+		<br />
+		under heading: {underHeading}
+		<br />
+		completed: {completed}
+		<br /><br />
 	{/each}
 </section>
 

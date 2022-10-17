@@ -31,49 +31,50 @@ const activities = [
   },
 ];
 
+const disabilityBookId = crypto.randomUUID();
 const projects = [
-  // {
-  //   id: crypto.randomUUID(),
-  //   projectName: "Work through Rust Web book",
-  //   projectTasks: ["read chapter 3", "do chapter 3 exercises"],
-  //   onDays: [
-  //     "Monday",
-  //     "Tuesday",
-  //     "Wednesday",
-  //     "Thursday",
-  //     "Friday",
-  //     "Saturday",
-  //   ],
-  //   underHeading: "afternoon productivity block",
-  //   started: true,
-  //   completed: false,
-  // },
-  // {
-  //   id: crypto.randomUUID(),
-  //   projectName: "prep grad school applications",
-  //   projectTasks: [
-  //     "read disability theory book",
-  //     "prep UBC grad application",
-  //     "prep UVic grad application",
-  //   ],
-  //   onDays: [
-  //     "Monday",
-  //     "Tuesday",
-  //     "Wednesday",
-  //     "Thursday",
-  //     "Friday",
-  //     "Saturday",
-  //   ],
-  //   underHeading: "morning productivity block",
-  //   started: false,
-  //   completed: false,
-  // }
+  {
+    id: crypto.randomUUID(),
+    projectName: "prep grad school applications",
+    projectActivityIds: [
+      disabilityBookId,
+    ],
+    onDays: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    underHeading: "morning productivity block",
+    started: false,
+    completed: false,
+  },
+];
+
+const allProjectActivities = [
+  {
+    id: disabilityBookId,
+    activityName: "read disability theory book",
+    associatedWithProject: projects[0].id,
+    onDays: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    underHeading: "bedtime routine",
+    completed: false,
+  },
 ];
 
 export const load: PageServerLoad = ({ data }) => {
   // console.log(data);
 
-  return { activities, projects };
+  return { activities, projects, allProjectActivities };
 };
 
 export const actions: Actions = {
@@ -107,22 +108,48 @@ export const actions: Actions = {
 
     // grab the name atributes off the various form inputs
     const projectName = formData.get("projectName");
-    const projectTasks = formData.getAll("projectTasks");
+
+    const projectActivities = formData.getAll("projectActivities");
+
     const onDays = formData.getAll("onDays");
     const underHeading = formData.get("underHeading");
     const started = formData.get("started");
 
-    console.log(projectName, projectTasks, onDays, underHeading, started);
+    // create Project ID
+    const projectId = crypto.randomUUID();
+
+    // create array for possible project activity id's
+    const activityIds = [];
+
+    console.log(projectName, projectActivities, onDays, underHeading, started);
+
+    if (projectActivities.length > 0) {
+      for (const projectActivity of projectActivities) {
+        const newProjectActivity = {
+          id: crypto.randomUUID(),
+          activityName: projectActivity,
+          associatedWithProject: projectId,
+          onDays: [""],
+          underHeading: "",
+          completed: false,
+        };
+        allProjectActivities.push(newProjectActivity);
+        activityIds.push(newProjectActivity.id);
+        // console.log(projectActivity);
+      }
+    }
+
     const newProject = {
-      id: crypto.randomUUID(),
+      id: projectId,
       projectName: projectName,
-      projectTasks: projectTasks,
+
+      projectActivityIds: activityIds,
+
       onDays: onDays,
       underHeading: underHeading || "none",
       started: started || false,
       completed: false,
     };
-
     // console.log(newActivity);
     projects.push(newProject);
 
