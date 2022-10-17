@@ -123,9 +123,9 @@
 			action="?/createProject"
 			use:enhance={({ form, data, action }) => {
 				// This runs before submission to server
-				console.log('form: ', form);
-				console.log('data: ', data);
-				console.log('action: ', action);
+				// console.log('form: ', form);
+				// console.log('data: ', data);
+				// console.log('action: ', action);
 
 				return async ({ result, update }) => {
 					// this part runs after submission to server
@@ -133,7 +133,6 @@
 
 					if (result.type === 'success') {
 						form.reset();
-						update();
 					}
 					if (result.type === 'invalid') {
 						await applyAction(result);
