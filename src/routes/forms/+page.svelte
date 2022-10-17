@@ -12,7 +12,7 @@
 
 	// Form
 	export let form: ActionData;
-	console.log(form);
+	// console.log(form);
 </script>
 
 <svelte:head>
@@ -23,14 +23,29 @@
 <section class="mx-auto">
 	<h1 class="text-3xl underline">Today</h1>
 	<div class="flex-col border">
-		<form method="POST" action="?/createActivity">
+		<form
+			method="POST"
+			action="?/createActivity"
+			use:enhance={({ form }) => {
+				return async ({ result, update }) => {
+					if (result.type === 'success') {
+						form.reset();
+					}
+					if (result.type === 'invalid') {
+						await applyAction(result);
+					}
+					// TODO: This is supposed to update the page with the new data
+					update();
+				};
+			}}
+		>
 			<br />
 			<label for="activityName" class="p-4 mx-auto">New Activity</label>
 			<input
 				required
 				type="text"
 				name="activityName"
-				placeholder="Your activity (< ~1hr)"
+				placeholder="Your activity (~1hr)"
 				class="input"
 			/>
 			<br /><br />
@@ -137,7 +152,7 @@
 					if (result.type === 'invalid') {
 						await applyAction(result);
 					}
-
+					// TODO: This is supposed to update the page with the new data
 					update();
 				};
 			}}

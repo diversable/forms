@@ -9,10 +9,6 @@
 
 	const { activities, projects, allProjectActivities } = data;
 	// END Loading Data
-
-	// Form
-	export let form: ActionData;
-	console.log(form);
 </script>
 
 <svelte:head>

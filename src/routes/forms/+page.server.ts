@@ -135,21 +135,19 @@ export const actions: Actions = {
 
     console.log(projectName, projectActivities, onDays, underHeading, started);
 
-    if (projectActivities.length > 0) {
-      for (const projectActivity of projectActivities) {
-        if (projectActivity.length == 0) break;
+    for (const projectActivity of projectActivities) {
+      if (projectActivity.length == 0) break;
 
-        const newProjectActivity = {
-          id: crypto.randomUUID(),
-          activityName: projectActivity,
-          associatedWithProject: projectId,
-          onDays: [""],
-          underHeading: "",
-          completed: false,
-        };
-        allProjectActivities.push(newProjectActivity);
-        activityIds.push(newProjectActivity.id);
-      }
+      const newProjectActivity = {
+        id: crypto.randomUUID(),
+        activityName: projectActivity,
+        associatedWithProject: projectId,
+        onDays: [""],
+        underHeading: "",
+        completed: false,
+      };
+      allProjectActivities.push(newProjectActivity);
+      activityIds.push(newProjectActivity.id);
     }
 
     const newProject = {
