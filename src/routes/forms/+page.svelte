@@ -7,7 +7,7 @@
 
 	// console.log(data);
 
-	const { activities, projects, allProjectActivities } = data;
+	$: ({ activities, projects, allProjectActivities } = data);
 	// END Loading Data
 
 	// Form
