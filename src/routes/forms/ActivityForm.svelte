@@ -29,6 +29,7 @@
 					await applyAction(result);
 				}
 				// TODO: This is supposed to update the page with the new data
+				// NB; worked around the issue by putting the loaded, destructured data into a reactive block. See +page.svelte.
 				update();
 			};
 		}}

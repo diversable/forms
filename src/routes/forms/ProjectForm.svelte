@@ -28,7 +28,7 @@
 
 			return async ({ result, update }) => {
 				// this part runs after submission to server
-				console.log('result: ', result);
+				// console.log('result: ', result);
 
 				if (result.type === 'success') {
 					form.reset();
@@ -37,6 +37,7 @@
 					await applyAction(result);
 				}
 				// TODO: This is supposed to update the page with the new data
+				// NB; worked around the issue by putting the loaded, destructured data into a reactive block. See +page.svelte.
 				update();
 			};
 		}}
